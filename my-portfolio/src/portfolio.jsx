@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const NAV_LINKS = ["About", "Skills", "Projects", "Experience", "Education", "Resume", "Contact"];
+const NAV_LINKS = ["About", "Skills", "Projects", "Education", "Resume", "Contact"];
 
 const SKILLS = [
   { title: "Languages", emoji: "💻", color: "#ff3cac", tags: ["Java", "Python", "C++", "C", "JavaScript"] },
@@ -13,44 +13,30 @@ const SKILLS = [
 
 const PROJECTS = [
   {
-    emoji: "📖", title: "CampusGig", color: "#ff3cac",
-    desc: "Full-stack MERN student freelance marketplace connecting students with gigs and internships, featuring authentication, real-time chat & video via Socket.io, and secure payments using Razorpay.",
+    emoji: "🛒", title: "E-Commerce Platform", color: "#ff3cac",
+    desc: "Full-stack shopping app with product listings, cart, user auth, and payment integration using MERN stack.",
     tech: ["React", "Node.js", "MongoDB", "Express"],
   },
   {
-    emoji: "🛣️", title: "SafeStreets", color: "#3b82f6",
-    desc: "MERN-based community safety platform enabling civic issue reporting with geolocation, role-based JWT authentication, secure APIs, and optimized backend performance.",
-    tech: ["Socket.io", "React", "Node.js", "Express", "MongoDB"],
+    emoji: "💬", title: "Real-time Chat App", color: "#3b82f6",
+    desc: "WebSocket-based chat supporting multiple rooms, private messaging, and live user presence tracking.",
+    tech: ["Socket.io", "React", "Node.js", "Express"],
   },
   {
-    emoji: "✈️", title: "Flight Booking System", color: "#10b981",
-    desc: "Full-stack flight booking system built using Java, Spring Boot, REST APIs, and MySQL, featuring validation, structured exception handling, and optimized booking workflows for reliability and scalability.",
-    tech: ["Java", "Spring Boot", "REST APIs", "MySQL"],
+    emoji: "📊", title: "DSA Visualizer", color: "#10b981",
+    desc: "Interactive tool to visualize sorting algorithms, graph traversals, and data structures for learning.",
+    tech: ["JavaScript", "HTML Canvas", "CSS"],
   },
   {
-    emoji: "🐰", title: "Talking Rabbitt", color: "#3b82f6",
-    desc: "Conversational analytics tool that allows users to upload datasets and query insights using natural language, generating automated visualizations and data-driven answers using Python, Streamlit, and Pandas.",
-    tech: ["Python", "Streamlit", "Pandas"],
+    emoji: "🧠", title: "Study Planner App", color: "#f59e0b",
+    desc: "Productivity app to schedule sessions, set goals, track progress, and manage academic workload.",
+    tech: ["React", "Tailwind", "Firebase"],
   },
-];
-
-const EXPERIENCES = [
-  {
-    icon: "💼",
-    role: "Software Developer Intern",
-    company: "Eazefly / AeroVerve",
-    detail: "Worked on a production flight booking platform using Supabase, developed REST APIs, handled authentication, fixed frontend-backend bugs, and integrated WhatsApp notifications.",
-    tech: ["Supabase", "REST APIs", "TypeScript", "Next.js"],
-    year: "Feb 2025 – Apr 2025",
-  }
 ];
 
 const ACHIEVEMENTS = [
   { icon: "💡", title: "LeetCode 300+ Problems", desc: "Consistent problem solver, rated 1507 on LeetCode" },
-{
-  icon: "📜", title: "Nutanix Certified Associate – Multicloud Infrastructure (NCA-MCI)",
-  desc: "Validated knowledge of multicloud architecture, virtualization, storage systems, and infrastructure management"
-},
+  { icon: "🎖️", title: "Add Your Achievement", desc: "Description of the achievement goes here" },
 ];
 
 const CONTACT_LINKS = [
@@ -390,71 +376,6 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* ── EXPERIENCE ── */}
-      <section id="experience" style={{ padding: isMobile ? "4rem 1.25rem" : `6rem ${px}`, borderTop: "1px solid rgba(0,0,0,0.06)" }}>
-        <FadeIn delay={0.05}><SectionTitle>Experience</SectionTitle></FadeIn>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem", marginTop: "0.5rem" }}>
-          {EXPERIENCES.map((e, i) => (
-            <FadeIn key={i} delay={i * 0.08}>
-              <div style={{
-                background: "#fff",
-                border: "1.5px solid #efefef",
-                borderRadius: 20,
-                padding: isMobile ? "1.2rem" : "1.8rem",
-                display: "flex",
-                gap: "1.5rem",
-                alignItems: "flex-start",
-              }}>
-                <div style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: 14,
-                  background: "linear-gradient(135deg, #10b981, #3b82f6)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "1.4rem",
-                }}>
-                  {e.icon}
-                </div>
-
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, fontSize: "1rem" }}>
-                    {e.role}
-                  </div>
-                  <div style={{ color: "#888", fontSize: "0.9rem", marginBottom: "0.4rem" }}>
-                    {e.company}
-                  </div>
-                  <div style={{ color: "#666", fontSize: "0.9rem", marginBottom: "0.6rem" }}>
-                    {e.detail}
-                  </div>
-
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-                    {e.tech.map(t => (
-                      <span key={t} style={{
-                        background: "#f5f5f5",
-                        borderRadius: "999px",
-                        padding: "0.2rem 0.6rem",
-                        fontSize: "0.75rem",
-                        color: "#666"
-                      }}>
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div style={{ color: "#aaa", fontSize: "0.8rem", fontWeight: 600 }}>
-                  {e.year}
-                </div>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </section>
-
-
       {/* ── PROJECTS ── */}
       <section id="projects" style={{ padding: isMobile ? "4rem 1.25rem" : `6rem ${px}`, borderTop: "1px solid rgba(0,0,0,0.06)" }}>
         <FadeIn delay={0.05}><SectionTitle>Things I've Built</SectionTitle></FadeIn>
@@ -551,7 +472,7 @@ export default function Portfolio() {
         </FadeIn>
         <div style={{
           display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(320px, 1fr))",
+          gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fill, minmax(240px, 1fr))",
           gap: "1rem",
         }}>
           {ACHIEVEMENTS.map((a, i) => (
