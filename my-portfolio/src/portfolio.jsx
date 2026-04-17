@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
+import heroImage from "./assets/hero.png";
 import "./portfolio.css";
+import { FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaGraduationCap, FaSchool, FaShieldAlt, FaMapMarkedAlt, FaUserFriends } from "react-icons/fa";
+import { SiLeetcode } from "react-icons/si";
 
 const NAV_LINKS = ["About", "Skills", "Projects", "Education", "Resume", "Contact"];
 
@@ -8,48 +11,62 @@ const SKILLS = [
   { title: "Frontend", emoji: "🌐", color: "#3b82f6", tags: ["React.js", "HTML5", "CSS3", "Tailwind CSS", "TypeScript"] },
   { title: "Backend", emoji: "⚙️", color: "#10b981", tags: ["Node.js", "Express.js", "REST APIs"] },
   { title: "Databases", emoji: "🗄️", color: "#ef4444", tags: ["MySQL", "MongoDB", "Supabase"] },
-  { title: "DSA & CS", emoji: "🧠", color: "#f59e0b", tags: ["Data Structures", "Algorithms", "OOP", "DBMS", "OS"] },
+  { title: "DSA & CS", emoji: "🧠", color: "#f59e0b", tags: ["Data Structures", "Algorithms", "OOP", "DBMS", "OS","Computer Networks"] },
+  { title: "System Design",color: "#06b6d4",tags: ["Client-Server Architecture","Scalability Basics", "Caching", "Load Balancing","API Design"] },
   { title: "Tools", emoji: "🛠️", color: "#8b5cf6", tags: ["Git & GitHub", "VS Code", "Postman", "Figma", "Linux"] },
 ];
 
 const PROJECTS = [
   {
-    emoji: "🛒", title: "E-Commerce Platform", color: "#ff3cac",
-    desc: "Full-stack shopping app with product listings, cart, user auth, and payment integration using MERN stack.",
-    tech: ["React", "Node.js", "MongoDB", "Express"],
+    title: "RideSafe — Cab Safety System",
+    icon: <FaShieldAlt />,
+    color: "#ff3cac",
+    desc: "Cab safety system focused on real-time tracking, emergency alerts, and secure ride monitoring to enhance passenger safety.",
+    tech: ["React", "Node.js", "Express", "MongoDB", "Maps API"],
+    github: "https://github.com/vanshikaraina/cab-safety",
+    live: "https://cab-safety.vercel.app/"
   },
   {
-    emoji: "💬", title: "Real-time Chat App", color: "#3b82f6",
-    desc: "WebSocket-based chat supporting multiple rooms, private messaging, and live user presence tracking.",
-    tech: ["Socket.io", "React", "Node.js", "Express"],
+    title: "CampusGig — Student Freelance Platform",
+    icon: <FaUserFriends />,
+    color: "#3b82f6",
+    desc: "Built a campus-based freelancing platform enabling students to post gigs, connect, and collaborate in real-time.",
+    tech: ["React", "Node.js", "Express", "MongoDB", "Socket.io"],
+    github: "https://github.com/vanshikaraina/campusgig",
+    live: "https://campusgig.vercel.app"
   },
   {
-    emoji: "📊", title: "DSA Visualizer", color: "#10b981",
-    desc: "Interactive tool to visualize sorting algorithms, graph traversals, and data structures for learning.",
-    tech: ["JavaScript", "HTML Canvas", "CSS"],
-  },
-  {
-    emoji: "🧠", title: "Study Planner App", color: "#f59e0b",
-    desc: "Productivity app to schedule sessions, set goals, track progress, and manage academic workload.",
-    tech: ["React", "Tailwind", "Firebase"],
+    title: "SafeStreets — Community Safety Platform",
+    icon: <FaMapMarkedAlt />,
+    color: "#10b981",
+    desc: "Developed a platform for reporting and visualizing unsafe areas, enabling users to share incidents and improve community safety awareness.",
+    tech: ["React", "Node.js", "Express", "MongoDB", "Maps API"],
+    github: "https://github.com/vanshikaraina/safestreets",
+    live: "https://safestreets.vercel.app"
   },
 ];
 
 const ACHIEVEMENTS = [
-  { icon: "💡", title: "LeetCode 300+ Problems", desc: "Consistent problem solver, rated 1507 on LeetCode" },
-  { icon: "🎖️", title: "Add Your Achievement", desc: "Description of the achievement goes here" },
+  { icon: "💡", title: "LeetCode 300+ Problems", desc: <>Consistent problem solver, rated <span style={{ fontWeight: "bold", color: "black" }}>1631</span> on LeetCode</> },
+  { 
+  icon: "🎖️", 
+  title: "Certifications", 
+  desc: "Nutanix Certified Associate — Multicloud Infrastructure (NCA-MCI): Validated knowledge of multicloud architecture, virtualization, storage systems, and infrastructure management." 
+},
 ];
 
 const CONTACT_LINKS = [
-  { icon: "✉️", label: "vanshika8727@gmail.com", href: "mailto:vanshika8727@gmail.com" },
-  { icon: "📞", label: "+91 87278 99915", href: "tel:+918727899915" },
-  { icon: "💼", label: "LinkedIn", href: "https://www.linkedin.com/in/vanshika-raina-845a58295/" },
-  { icon: "🐙", label: "GitHub", href: "https://github.com/vanshikaraina" },
-  { icon: "🔢", label: "LeetCode", href: "https://leetcode.com/u/vanshika1515/" },
+  { icon: <FaEnvelope />, label: "vanshika8727@gmail.com", href: "mailto:vanshika8727@gmail.com" },
+  { icon: <FaPhone />, label: "+91 87278 99915", href: "tel:+918727899915" },
+  { icon: <FaLinkedin />, label: "LinkedIn", href: "https://www.linkedin.com/in/vanshika-raina-845a58295/" },
+  { icon: <FaGithub />, label: "GitHub", href: "https://github.com/vanshikaraina" },
+  { icon: <SiLeetcode />, label: "LeetCode", href: "https://leetcode.com/u/vanshika1515/" },
 ];
 
 /* ── HOOKS ── */
-function useInView(options = {}) {
+const DEFAULT_IN_VIEW_OPTIONS = {};
+
+function useInView(options = DEFAULT_IN_VIEW_OPTIONS) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
   useEffect(() => {
@@ -59,7 +76,7 @@ function useInView(options = {}) {
     );
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
-  }, []);
+  }, [options]);
   return [ref, inView];
 }
 
@@ -106,16 +123,11 @@ export default function Portfolio() {
   const isMobile = width < 768;
   const isTablet = width < 1024;
 
-  // Close menu on resize to desktop
-  useEffect(() => {
-    if (!isMobile) setMenuOpen(false);
-  }, [isMobile]);
-
   // Lock body scroll when mobile menu is open
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.body.style.overflow = menuOpen && isMobile ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [menuOpen]);
+  }, [menuOpen, isMobile]);
 
   const scrollTo = (id) => {
     document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
@@ -202,8 +214,9 @@ export default function Portfolio() {
           />
         ))}
 
+        <div className="hero__layout">
         <div className="hero__content">
-          <div className="hero__badge">✦ Open to Internships</div>
+          <div className="hero__badge">Open to Internships</div>
 
           <h1 className={`hero__title ${isMobile ? "hero__title--mobile" : ""}`}>
             Hi, I'm{" "}
@@ -219,15 +232,36 @@ export default function Portfolio() {
               onClick={() => scrollTo("Projects")}
               className={`btn btn--primary ${isMobile ? "btn--mobile" : ""}`}
             >
-              🚀 View My Work
+              View My Work
             </button>
             <button
               onClick={() => scrollTo("Contact")}
               className={`btn btn--secondary ${isMobile ? "btn--mobile" : ""}`}
             >
-              ✉️ Get in Touch
+              Get in Touch
             </button>
           </div>
+        </div>
+
+        {/* <aside className="hero__profile" aria-label="Portfolio snapshot">
+          <div className="hero__image-wrap">
+            <img src={heroImage} alt="Vanshika Raina portfolio portrait" className="hero__image" />
+          </div>
+          <div className="hero__snapshot">
+            <span>Current Focus</span>
+            <strong>Full stack projects, DSA, and internships</strong>
+          </div>
+          <div className="hero__quick-stats">
+            <div>
+              <strong>300+</strong>
+              <span>DSA problems</span>
+            </div>
+            <div>
+              <strong>10+</strong>
+              <span>Projects</span>
+            </div>
+          </div>
+        </aside> */}
         </div>
       </section>
 
@@ -280,50 +314,47 @@ export default function Portfolio() {
       </section>
 
       {/* ── SKILLS ── */}
-      <section
-        id="skills"
-        className={`skills ${isMobile ? "skills--mobile" : ""}`}
-        style={{ padding: isMobile ? "4rem 1.25rem" : `6rem ${px}` }}
-      >
-        <FadeIn delay={0.05}><SectionTitle>Tech Stack</SectionTitle></FadeIn>
-        <div className={`skills__grid ${isMobile ? "skills__grid--mobile" : ""}`}>
-          {SKILLS.map((cat, i) => (
-            <FadeIn key={i} delay={i * 0.07}>
-              <div
-                className="skill-card"
-                onMouseEnter={e => {
-                  e.currentTarget.style.transform = "translateY(-4px)";
-                  e.currentTarget.style.boxShadow = `0 12px 36px ${cat.color}22`;
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.transform = "";
-                  e.currentTarget.style.boxShadow = "";
+<section
+  id="skills"
+  className={`skills ${isMobile ? "skills--mobile" : ""}`}
+>
+  <FadeIn delay={0.05}>
+    <SectionTitle>Tech Stack</SectionTitle>
+  </FadeIn>
+
+  <div className="skills__list">
+    {SKILLS.map((cat, i) => (
+      <FadeIn key={i} delay={i * 0.07}>
+        <div className="skills__category">
+          
+          <div className="skills__category-header">
+            <span
+              className="skills__category-dot"
+              style={{ background: cat.color }}
+            />
+            <h4>{cat.title}</h4>
+          </div>
+
+          <div className="skills__pills">
+            {cat.tags.map((t) => (
+              <span
+                key={t}
+                className="skills__pill"
+                style={{
+                  borderColor: `${cat.color}40`,
+                  color: cat.color,
                 }}
               >
-                <div className="skill-card__bar" style={{ background: cat.color }} />
-                <div className="skill-card__header">
-                  <span>{cat.emoji}</span> {cat.title}
-                </div>
-                <div className="skill-card__tags">
-                  {cat.tags.map(t => (
-                    <span
-                      key={t}
-                      className="skill-tag"
-                      style={{
-                        background: `${cat.color}12`,
-                        color: cat.color,
-                        border: `1px solid ${cat.color}30`,
-                      }}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </FadeIn>
-          ))}
+                {t}
+              </span>
+            ))}
+          </div>
+
         </div>
-      </section>
+      </FadeIn>
+    ))}
+  </div>
+</section>
 
       {/* ── PROJECTS ── */}
       <section
@@ -348,7 +379,7 @@ export default function Portfolio() {
                   e.currentTarget.style.borderColor = "#efefef";
                 }}
               >
-                <div className="project-card__emoji">{p.emoji}</div>
+                <div className="project-card__icon">{p.icon}</div>
                 <div className="project-card__title">{p.title}</div>
                 <p className="project-card__desc">{p.desc}</p>
                 <div className="project-card__tech">
@@ -357,16 +388,29 @@ export default function Portfolio() {
                   ))}
                 </div>
                 <div className="project-card__links">
-                  {["⬡ GitHub", "↗ Live Demo"].map(lbl => (
+                  {p.github && (
                     <a
-                      key={lbl}
-                      href="#"
+                      href={p.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="project-card__link"
                       style={{ color: p.color }}
                     >
-                      {lbl}
+                      ⬡ GitHub
                     </a>
-                  ))}
+                  )}
+
+                  {p.live && (
+                    <a
+                      href={p.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="project-card__link"
+                      style={{ color: p.color }}
+                    >
+                      ↗ Live Demo
+                    </a>
+                  )}
                 </div>
               </div>
             </FadeIn>
@@ -385,13 +429,13 @@ export default function Portfolio() {
         <div className="education__list">
           {[
             {
-              icon: "🎓", degree: "B.E — Computer Science & Engineering",
+              icon: <FaGraduationCap />, degree: "B.E — Computer Science & Engineering",
               school: "Chitkara University, Punjab",
               detail: "CGPA: 9.14 / 10 · DSA, DBMS, OS, CN, Software Engineering",
               year: "2023 – 2027",
             },
             {
-              icon: "🏫", degree: "Class XII — Non-Medical",
+              icon: <FaSchool />, degree: "Class XII — Non-Medical",
               school: "Sacred Heart Sr. Sec. School, BRS Nagar, Ludhiana, Punjab",
               detail: "Score: 79.8% · Board: CBSE",
               year: "2023",
@@ -417,7 +461,7 @@ export default function Portfolio() {
         </div>
 
         <FadeIn delay={0.1}>
-          <h3 className="achievements-title">🏆 Achievements</h3>
+          <h3 className="achievements-title">Achievements</h3>
         </FadeIn>
         <div className={`achievements__grid ${isMobile ? "achievements__grid--mobile" : ""}`}>
           {ACHIEVEMENTS.map((a, i) => (
@@ -450,8 +494,12 @@ export default function Portfolio() {
             <p className="resume__desc">
               Get a PDF overview of my skills, projects, education, and experience. Updated for the 2026-27 internship season.
             </p>
-            <a href="YOUR_RESUME_LINK_HERE" download className="resume__btn">
-              ⬇️ Download Resume (PDF)
+            <a
+              href="/My-Portfolio/VanshikaRaina_Ressume.pdf"
+              download
+              className="resume__btn"
+            >
+              Download Resume (PDF)
             </a>
           </div>
         </FadeIn>
@@ -464,7 +512,7 @@ export default function Portfolio() {
         style={{ padding: isMobile ? "4rem 1.25rem" : `6rem ${px}` }}
       >
         <FadeIn delay={0.05}>
-          <SectionTitle color="#5d4141">Let's Connect ✨</SectionTitle>
+          <SectionTitle color="#5d4141">Let's Connect</SectionTitle>
         </FadeIn>
         <FadeIn delay={0.1}>
           <p className="contact__subtitle">
@@ -492,7 +540,7 @@ export default function Portfolio() {
       <footer className={`footer ${isMobile ? "footer--mobile" : ""}`}>
         Designed & built by{" "}
         <span className="footer__name">Vanshika Raina</span>
-        {" "}· 2026 · Made with ♥ and lots of ☕
+        {" "}· 2026
       </footer>
 
     </div>
